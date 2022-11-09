@@ -2,33 +2,67 @@ Config = {}
 
 Config.UseTarget = GetConvar('UseTarget', 'false') == 'true'
 
--- Price taken and given back when delivered a truck
-Config.TruckPrice = 250
+Config.NotifyType = "okok"                          -- Change to "qb" for standard qb-core notifications; change to "okok" for okokNotify notifications. 
 
--- Want to give out a cryptostick per stop?
-Config.GiveCryptoStick = true
+Config.TruckPrice = 250                             -- Price taken and given back when delivered a truck
 
--- Has to roll this number or higher to receive a cryptostick
-Config.CryptoStickChance = 75
+Config.MinStops = 5                                 -- How many stops minimum should the job roll?
 
--- How many stops minimum should the job roll?
-Config.MinStops = 5
+Config.BagUpperWorth = 100                          -- Upper worth per bag
 
--- Upper worth per bag
-Config.BagUpperWorth = 100
+Config.BagLowerWorth = 50                           -- Lower worth per bag
 
--- Lower worth per bag
-Config.BagLowerWorth = 50
+Config.MinBagsPerStop = 2                           -- Minimum bags per stop
 
--- Minimum bags per stop
-Config.MinBagsPerStop = 2
+Config.MaxBagsPerStop = 6                           -- Maximum bags per stop
 
--- Maximum bags per stop
-Config.MaxBagsPerStop = 5
+--------------
+-- MZ-SKILLS--
+--------------
 
--- WIP: Do not use
--- If you want to use custom routes instead of random amount of stops stops set to true
-Config.UsePreconfiguredRoutes = false
+Config.mzskills = true                              -- For use with "mz-skills: Driving" XP. Set to "false" to disable. 
+-- if "Config.mzskills = true", then the following parameters apply: 
+Config.DriverXPlow = 1                              -- Minimum amount of "Driving" XP given for completing a garbage pick-up location. 
+Config.DriverXPhigh = 3                             -- Maximum amount of "Driving" XP given for completing a garbage pick-up location. 
+Config.BonusChance = 100                            -- Chance (in percentage) for a player to be paid a tip for their service per garbage pick-up location (set to 0 to disable).
+--TIPS GIVEN:
+--Level 1
+Config.Level1Low = 1                                -- Lowest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+Config.Level1High = 5                               -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+--Level 2
+Config.Level2Low = 3                                -- Lowest tip given to player at "Driving" Level 2 if bonuses are enabled. 
+Config.Level2High = 8                               -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+--Level 3
+Config.Level3Low = 5                                -- Lowest tip given to player at "Driving" Level 3 if bonuses are enabled. 
+Config.Level3High = 12                              -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+--Level 4
+Config.Level4Low = 8                                -- Lowest tip given to player at "Driving" Level 4 if bonuses are enabled. 
+Config.Level4High = 16                              -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+--Level 5
+Config.Level5Low = 10                               -- Lowest tip given to player at "Driving" Level 5 if bonuses are enabled. 
+Config.Level5High = 18                              -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+--Level 6
+Config.Level6Low = 13                               -- Lowest tip given to player at "Driving" Level 6 if bonuses are enabled. 
+Config.Level6High = 22                              -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+--Level 7
+Config.Level7Low = 15                               -- Lowest tip given to player at "Driving" Level 7 if bonuses are enabled. 
+Config.Level7High = 26                              -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+--Level 8
+Config.Level8Low = 18                               -- Lowest tip given to player at "Driving" Level 8 if bonuses are enabled. 
+Config.Level8High = 30                              -- Highest tip given to player at "Driving" Level 1 if bonuses are enabled. 
+
+------------------------
+--BONUS ITEMS PER STOP--
+------------------------
+
+Config.GiveBonusitems = true                        -- Chance for rare items; set to "false" to disable items being given out per stop.
+-- if "Config.GiveBonusitems = true ", then the following parameters apply:
+Config.RareItem1 = "blankusb"                       -- The item that will be given if the probability hits. 
+Config.RareItem1chance = 2                          -- Chance (in percentage) for the item to drop, per stop; (Set to 0 to disable this drop entirely).
+Config.RareItem2 = "cryptostick"                    -- The item that will be given if the probability hits. 
+Config.RareItem2chance = 4                          -- Chance (in percentage) for the item to drop, per stop; (Set to 0 to disable this drop entirely).
+Config.RareItem3 = "fabric"                         -- The item that will be given if the probability hits. 
+Config.RareItem3chance = 10                         -- Chance (in percentage) for the item to drop, per stop; (Set to 0 to disable this drop entirely).  
 
 Config.Peds = {
     {
@@ -158,3 +192,7 @@ Config.Locations = {
 }
 
 Config.Vehicle = 'trash2' -- vehicle name used to spawn
+
+-- WIP: Do not use
+-- If you want to use custom routes instead of random amount of stops stops set to true
+Config.UsePreconfiguredRoutes = false

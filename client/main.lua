@@ -122,20 +122,140 @@ local function DeliverAnim()
         if (amountOfBags - 1) <= 0 then
             QBCore.Functions.TriggerCallback('garbagejob:server:NextStop', function(hasMoreStops, nextStop, newBagAmount)
                 if hasMoreStops and nextStop ~= 0 then
-                    -- Here he puts your next location and you are not finished working yet.
                     currentStop = nextStop
                     currentStopNum = currentStopNum + 1
                     amountOfBags = newBagAmount
                     SetGarbageRoute()
-                    QBCore.Functions.Notify(Lang:t("info.all_bags"))
+                    if Config.NotifyType == 'qb' then
+                        QBCore.Functions.Notify(Lang:t("info.all_bags"), "primary", 3500)
+                    elseif Config.NotifyType == "okok" then
+                        exports['okokNotify']:Alert("JOB DONE", Lang:t("info.all_bags"), 3500, "info")
+                    end 
                     SetVehicleDoorShut(garbageVehicle, 5, false)
+                    if Config.mzskills then 
+                        local BetterXP = math.random(Config.DriverXPlow, Config.DriverXPhigh)
+                        local xpmultiple = math.random(1, 4)
+                        if xpmultiple >= 3 then
+                            chance = BetterXP
+                        elseif xpmultiple < 3 then
+                            chance = Config.DriverXPlow
+                        end
+                        exports["mz-skills"]:UpdateSkill("Driving", chance) 
+                        Wait(1000)
+                        if Config.BonusChance >= math.random(1, 100) then
+                            exports["mz-skills"]:CheckSkill("Driving", 12800, function(hasskill)
+                                if hasskill then lvl8 = true end
+                            end)
+                            exports["mz-skills"]:CheckSkill("Driving", 6400, function(hasskill)
+                                if hasskill then lvl7 = true end
+                            end)
+                            exports["mz-skills"]:CheckSkill("Driving", 3200, function(hasskill)
+                                if hasskill then lvl6 = true end
+                            end)
+                            exports["mz-skills"]:CheckSkill("Driving", 1600, function(hasskill)
+                                if hasskill then lvl5 = true end
+                            end)
+                            exports["mz-skills"]:CheckSkill("Driving", 800, function(hasskill)
+                                if hasskill then lvl4 = true end
+                            end)
+                            exports["mz-skills"]:CheckSkill("Driving", 400, function(hasskill)
+                                if hasskill then lvl3 = true end
+                            end)
+                            exports["mz-skills"]:CheckSkill("Driving", 200, function(hasskill)
+                                if hasskill then lvl2 = true end
+                            end)
+                            exports["mz-skills"]:CheckSkill("Driving", 0, function(hasskill)
+                                if hasskill then lvl1 = true end
+                            end)
+                            if lvl8 then
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel8')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('Best service I have had, take my money!', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", "Best service I have had, take my money!", 3500, "info")
+                                end 
+                                lvl8 = false
+                            elseif lvl7 then
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel7')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('You could get away from law enforcement all day with driving like that!', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", 'You could get away from law enforcement all day with driving like that!', 3500, "info")
+                                end 
+                                lvl7 = false
+                            elseif lvl6  then
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel6')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('Hey, can I grab your number? You got me here quick smart!', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", 'Hey, can I grab your number? You got me here quick smart!', 3500, "info")
+                                end 
+                                lvl6 = false
+                            elseif lvl5  then
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel5')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('Hey, can I grab your number? You got me here quick smart!', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", 'Hey, can I grab your number? You got me here quick smart!', 3500, "info")
+                                end 
+                                lvl5 = false
+                            elseif lvl4  then
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel4')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('Hey I appreciate that, thank you! Take something extra please...', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", 'Hey I appreciate that, thank you! Take something extra please...', 3500, "info")
+                                end 
+                                lvl4 = false
+                            elseif lvl3  then
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel3')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('Hey I appreciate that, thank you! Take something extra please...', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", 'Hey I appreciate that, thank you! Take something extra please...', 3500, "info")
+                                end 
+                                lvl3 = false
+                            elseif lvl2  then
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel2')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('Nice driving, thank you! Here is a small tip...', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", 'Nice driving, thank you! Here is a small tip...', 3500, "info")
+                                end 
+                                lvl2 = false
+                            elseif lvl1  then 
+                                TriggerServerEvent('qb-garbagejob:server:NPCBonusLevel1')
+                                Wait(1500)
+                                if Config.NotifyType == 'qb' then
+                                    QBCore.Functions.Notify('Nice driving, thank you! Here is a small tip...', "info", 3500)
+                                elseif Config.NotifyType == "okok" then
+                                    exports['okokNotify']:Alert("TIP", 'Nice driving, thank you! Here is a small tip...', 3500, "info")
+                                end 
+                                lvl1 = false
+                            end
+                        end
+                    end
                 else
                     if hasMoreStops and nextStop == currentStop then
-                        QBCore.Functions.Notify(Lang:t("info.depot_issue"))
+                        if Config.NotifyType == 'qb' then
+                            QBCore.Functions.Notify(Lang:t("info.depot_issue"), "primary", 3500)
+                        elseif Config.NotifyType == "okok" then
+                            exports['okokNotify']:Alert("DEPOT", Lang:t("info.depot_issue"), 3500, "info")
+                        end 
                         amountOfBags = 0
                     else
-                        -- You are done with work here.
-                        QBCore.Functions.Notify(Lang:t("info.done_working"))
+                        if Config.NotifyType == 'qb' then
+                            QBCore.Functions.Notify(Lang:t("info.done_working"), "primary", 3500)
+                        elseif Config.NotifyType == "okok" then
+                            exports['okokNotify']:Alert("WORK COMPLETE", Lang:t("info.done_working"), 3500, "info")
+                        end 
                         SetVehicleDoorShut(garbageVehicle, 5, false)
                         RemoveBlip(deliveryBlip)
                         SetRouteBack()
@@ -144,16 +264,26 @@ local function DeliverAnim()
                 end
             end, currentStop, currentStopNum, pos)
         else
-            -- You haven't delivered all bags here
             amountOfBags = amountOfBags - 1
             if amountOfBags > 1 then
-                QBCore.Functions.Notify(Lang:t("info.bags_left", { value = amountOfBags }))
+                if Config.NotifyType == 'qb' then
+                    QBCore.Functions.Notify(Lang:t("info.bags_left", { value = amountOfBags }), "primary", 3500)
+                elseif Config.NotifyType == "okok" then
+                    exports['okokNotify']:Alert("GOOD WORK", Lang:t("info.bags_left", { value = amountOfBags }), 3500, "info")
+                end 
             else
-                QBCore.Functions.Notify(Lang:t("info.bags_still", { value = amountOfBags }))
+                if Config.NotifyType == 'qb' then
+                    QBCore.Functions.Notify(Lang:t("info.bags_still", { value = amountOfBags }), "primary", 3500)
+                elseif Config.NotifyType == "okok" then
+                    exports['okokNotify']:Alert("GOOD WORK", Lang:t("info.bags_still", { value = amountOfBags }), 3500, "info")
+                end 
             end
             exports['qb-target']:AddCircleZone('garbagebin', vector3(CL.coords.x, CL.coords.y, CL.coords.z), 2.0,{
                 name = 'garbagebin', debugPoly = false, useZ=true}, {
-                options = {{label = Lang:t("target.grab_garbage"),icon = 'fa-solid fa-trash', action = function() TakeAnim() end}},
+                options = {
+                            {label = Lang:t("target.grab_garbage"), icon = 'fa-solid fa-trash',action = function() TakeAnim() end},
+                            {label = "Search through trash",icon = "fas fa-search", event = "mz-bins:SearchBin"},
+                        },
                 distance = 2.0
             })
         end
@@ -191,6 +321,11 @@ function TakeAnim()
     end, function()
         StopAnimTask(PlayerPedId(), "anim@amb@clubhouse@tutorial@bkr_tut_ig3@", "machinic_loop_mechandplayer", 1.0)
         QBCore.Functions.Notify(Lang:t("error.cancled"), "error")
+        if Config.NotifyType == 'qb' then
+            QBCore.Functions.Notify(Lang:t("error.cancled"), "error", 3500)
+        elseif Config.NotifyType == "okok" then
+            exports['okokNotify']:Alert("CANCELLED", Lang:t("error.cancled"), 3500, "error")
+        end 
     end)
 end
 
@@ -257,16 +392,28 @@ local function RunWorkLoop()
                                                     currentStopNum = currentStopNum + 1
                                                     amountOfBags = newBagAmount
                                                     SetGarbageRoute()
-                                                    QBCore.Functions.Notify(Lang:t("info.all_bags"))
+                                                    if Config.NotifyType == 'qb' then
+                                                        QBCore.Functions.Notify(Lang:t("info.all_bags"), "primary", 3500)
+                                                    elseif Config.NotifyType == "okok" then
+                                                        exports['okokNotify']:Alert("BAGS", Lang:t("info.all_bags"), 3500, "info")
+                                                    end 
                                                     listen = false
                                                     SetVehicleDoorShut(garbageVehicle, 5, false)
                                                 else
                                                     if hasMoreStops and nextStop == currentStop then
-                                                        QBCore.Functions.Notify(Lang:t("info.depot_issue"))
+                                                        if Config.NotifyType == 'qb' then
+                                                            QBCore.Functions.Notify(Lang:t("info.depot_issue"), "primary", 3500)
+                                                        elseif Config.NotifyType == "okok" then
+                                                            exports['okokNotify']:Alert("DEPOT", Lang:t("info.depot_issue"), 3500, "info")
+                                                        end 
                                                         amountOfBags = 0
                                                     else
                                                         -- You are done with work here.
-                                                        QBCore.Functions.Notify(Lang:t("info.done_working"))
+                                                        if Config.NotifyType == 'qb' then
+                                                            QBCore.Functions.Notify(Lang:t("info.done_working"), "primary", 3500)
+                                                        elseif Config.NotifyType == "okok" then
+                                                            exports['okokNotify']:Alert("JOB DONE", Lang:t("info.done_working"), 3500, "info")
+                                                        end 
                                                         SetVehicleDoorShut(garbageVehicle, 5, false)
                                                         RemoveBlip(deliveryBlip)
                                                         SetRouteBack()
@@ -280,9 +427,17 @@ local function RunWorkLoop()
                                             -- You haven't delivered all bags here
                                             amountOfBags = amountOfBags - 1
                                             if amountOfBags > 1 then
-                                                QBCore.Functions.Notify(Lang:t("info.bags_left", { value = amountOfBags }))
+                                                if Config.NotifyType == 'qb' then
+                                                    QBCore.Functions.Notify(Lang:t("info.bags_left", { value = amountOfBags }), "primary", 3500)
+                                                elseif Config.NotifyType == "okok" then
+                                                    exports['okokNotify']:Alert("BAGS LEFT", Lang:t("info.bags_left", { value = amountOfBags }), 3500, "info")
+                                                end 
                                             else
-                                                QBCore.Functions.Notify(Lang:t("info.bags_still", { value = amountOfBags }))
+                                                if Config.NotifyType == 'qb' then
+                                                    QBCore.Functions.Notify(Lang:t("info.bags_still", { value = amountOfBags }), "primary", 3500)
+                                                elseif Config.NotifyType == "okok" then
+                                                    exports['okokNotify']:Alert("BAGS REMAINING", Lang:t("info.bags_still", { value = amountOfBags }), 3500, "info")
+                                                end 
                                             end
                                             hasBag = false
                                         end
@@ -293,13 +448,21 @@ local function RunWorkLoop()
                                             TrucText = false
                                         end
                                     end, function() -- Cancel
-                                    QBCore.Functions.Notify(Lang:t("error.cancled"), "error")
+                                    if Config.NotifyType == 'qb' then
+                                        QBCore.Functions.Notify(Lang:t("error.cancled"), "error", 3500)
+                                    elseif Config.NotifyType == "okok" then
+                                        exports['okokNotify']:Alert("CANCELLED", Lang:t("error.cancled"), 3500, "error")
+                                    end 
                                 end)
 
                             end
                         end
                     else
-                        QBCore.Functions.Notify(Lang:t("error.no_truck"), "error")
+                        if Config.NotifyType == 'qb' then
+                            QBCore.Functions.Notify(Lang:t("error.no_truck"), "error", 3500)
+                        elseif Config.NotifyType == "okok" then
+                            exports['okokNotify']:Alert("NO TRUCK?", Lang:t("error.no_truck"), 3500, "error")
+                        end 
                         hasBag = false
                     end
                 end
@@ -353,7 +516,10 @@ function SetGarbageRoute()
     if Config.UseTarget and not hasBag then
         exports['qb-target']:AddCircleZone('garbagebin', vector3(CL.coords.x, CL.coords.y, CL.coords.z), 2.0,{
             name = 'garbagebin', debugPoly = false, useZ=true }, {
-            options = {{label = Lang:t("target.grab_garbage"), icon = 'fa-solid fa-trash', action = function() TakeAnim() end }},
+            options = {
+                {label = Lang:t("target.grab_garbage"), icon = 'fa-solid fa-trash',action = function() TakeAnim() end},
+                {label = "Search through trash",icon = "fas fa-search", event = "mz-bins:SearchBin"},
+            },
             distance = 2.0
         })
     end
@@ -455,7 +621,7 @@ RegisterNetEvent('qb-garbagejob:client:RequestRoute', function()
                             garbageVehicle = veh
                             SetVehicleNumberPlateText(veh, "QB-" .. tostring(math.random(1000, 9999)))
                             SetEntityHeading(veh, v.w)
-                            exports['LegacyFuel']:SetFuel(veh, 100.0)
+                            exports['ps-fuel']:SetFuel(veh, 100.0)
                             SetVehicleFixed(veh)
                             SetEntityAsMissionEntity(veh, true, true)
                             SetVehicleDoorsLocked(veh, 2)
@@ -464,8 +630,17 @@ RegisterNetEvent('qb-garbagejob:client:RequestRoute', function()
                             amountOfBags = totalBags
                             SetGarbageRoute()
                             TriggerEvent("vehiclekeys:client:SetOwner", QBCore.Functions.GetPlate(veh))
-                            QBCore.Functions.Notify(Lang:t("info.deposit_paid", { value = Config.TruckPrice }))
-                            QBCore.Functions.Notify(Lang:t("info.started"))
+                            if Config.NotifyType == 'qb' then
+                                QBCore.Functions.Notify(Lang:t("info.deposit_paid", { value = Config.TruckPrice }), "primary", 3500)
+                            elseif Config.NotifyType == "okok" then
+                                exports['okokNotify']:Alert("DEPOSIT PAID", Lang:t("info.deposit_paid", { value = Config.TruckPrice }), 3500, "info")
+                            end 
+                            Wait(1000)
+                            if Config.NotifyType == 'qb' then
+                                QBCore.Functions.Notify(Lang:t("info.started"), "success", 3500)
+                            elseif Config.NotifyType == "okok" then
+                                exports['okokNotify']:Alert("RUN STARTED", Lang:t("info.started"), 3500, "success")
+                            end 
                             TriggerServerEvent("qb-garbagejob:server:payDeposit")
                         end, Config.Vehicle, v, false)
                         return
@@ -474,7 +649,11 @@ RegisterNetEvent('qb-garbagejob:client:RequestRoute', function()
                     end
                 end
                 if occupied then
-                    QBCore.Functions.Notify(Lang:t("error.all_occupied"))
+                    if Config.NotifyType == 'qb' then
+                        QBCore.Functions.Notify(Lang:t("error.all_occupied"), "error", 3500)
+                    elseif Config.NotifyType == "okok" then
+                        exports['okokNotify']:Alert("BAYS OCCUPIED", Lang:t("error.all_occupied"), 3500, "error")
+                    end 
                 end
             end
             currentStop = firstStop
@@ -482,7 +661,11 @@ RegisterNetEvent('qb-garbagejob:client:RequestRoute', function()
             amountOfBags = totalBags
             SetGarbageRoute()
         else
-            QBCore.Functions.Notify(Lang:t("info.not_enough", { value = Config.TruckPrice }))
+            if Config.NotifyType == 'qb' then
+                QBCore.Functions.Notify(Lang:t("info.not_enough", { value = Config.TruckPrice }), "success", 3500)
+            elseif Config.NotifyType == "okok" then
+                exports['okokNotify']:Alert("NOT ENOUGH $", Lang:t("info.not_enough", { value = Config.TruckPrice }), 3500, "success")
+            end 
         end
     end, continueworking)
 end)
@@ -490,7 +673,11 @@ end)
 RegisterNetEvent('qb-garbagejob:client:RequestPaycheck', function()
     if garbageVehicle then
         BringBackCar()
-        QBCore.Functions.Notify(Lang:t("info.truck_returned"))
+        if Config.NotifyType == 'qb' then
+            QBCore.Functions.Notify(Lang:t("info.truck_returned"), "success", 3500)
+        elseif Config.NotifyType == "okok" then
+            exports['okokNotify']:Alert("TRUCK RETURNED", Lang:t("info.truck_returned"), 3500, "success")
+        end 
     end
     TriggerServerEvent('garbagejob:server:PayShift')
 end)

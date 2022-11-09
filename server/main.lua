@@ -12,18 +12,15 @@ QBCore.Functions.CreateCallback("garbagejob:server:NewShift", function(source, c
     local nextStop = 0
     local totalNumberOfStops = 0
     local bagNum = 0
-
     if CanPay(Player) or continue then
         math.randomseed(os.time())
         local MaxStops = math.random(Config.MinStops, #Config.Locations["trashcan"])
         local allStops = {}
-
         for _=1, MaxStops do
             local stop = math.random(#Config.Locations["trashcan"])
             local newBagAmount = math.random(Config.MinBagsPerStop, Config.MaxBagsPerStop)
             allStops[#allStops+1] = {stop = stop, bags = newBagAmount}
         end
-
         Routes[CitizenId] = {
             stops = allStops,
             currentStop = 1,
@@ -34,7 +31,6 @@ QBCore.Functions.CreateCallback("garbagejob:server:NewShift", function(source, c
             stopsCompleted = 0,
             totalNumberOfStops = #allStops
         }
-
         nextStop = allStops[1].stop
         shouldContinue = true
         totalNumberOfStops = #allStops
@@ -55,20 +51,23 @@ end)
 QBCore.Functions.CreateCallback("garbagejob:server:NextStop", function(source, cb, currentStop, currentStopNum, currLocation)
     local Player = QBCore.Functions.GetPlayer(source)
     local CitizenId = Player.PlayerData.citizenid
-
     local currStopCoords = Config.Locations["trashcan"][currentStop].coords
     currStopCoords = vector3(currStopCoords.x, currStopCoords.y, currStopCoords.z)
-
     local distance = #(currLocation - currStopCoords)
     local newStop = 0
     local shouldContinue = false
     local newBagAmount = 0
-
-    if(math.random(100) >= Config.CryptoStickChance) and Config.GiveCryptoStick then
-        Player.Functions.AddItem("cryptostick", 1, false)
-        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items["cryptostick"], 'add')
-        TriggerClientEvent('QBCore:Notify', source, Lang:t("info.found_crypto"))
-
+    if(math.random(100) <= Config.RareItem1chance) and Config.GiveBonusitems then
+        Player.Functions.AddItem(Config.RareItem1, 1, false)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.RareItem1], 'add')
+    end
+    if(math.random(100) <= Config.RareItem2chance) and Config.GiveBonusitems then
+        Player.Functions.AddItem(Config.RareItem2, 1, false)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.RareItem2], 'add')
+    end
+    if(math.random(100) <= Config.RareItem3chance) and Config.GiveBonusitems then
+        Player.Functions.AddItem(Config.RareItem3, 1, false)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.RareItem3], 'add')
     end
 
     if distance <= 20 then
@@ -81,11 +80,9 @@ QBCore.Functions.CreateCallback("garbagejob:server:NextStop", function(source, c
             shouldContinue = true
             local bagAmount = Routes[CitizenId].stops[currentStopNum].bags
             local totalNewPay = 0
-
             for _ = 1, bagAmount do
                 totalNewPay = totalNewPay + math.random(Config.BagLowerWorth, Config.BagUpperWorth)
             end
-
             Routes[CitizenId].actualPay = math.ceil(Routes[CitizenId].actualPay + totalNewPay)
             Routes[CitizenId].stopsCompleted = tonumber(Routes[CitizenId].stopsCompleted) + 1
         end
@@ -121,7 +118,6 @@ RegisterNetEvent('garbagejob:server:PayShift', function(continue)
         if depositPay == 0 then
             payoutDeposit = ""
         end
-
         Player.Functions.AddMoney("bank", totalToPay , 'garbage-payslip')
         TriggerClientEvent('QBCore:Notify', src, Lang:t("success.pay_slip", {total = totalToPay, deposit = payoutDeposit}), "success")
         Routes[CitizenId] = nil
@@ -139,7 +135,79 @@ QBCore.Commands.Add("cleargarbroutes", "Removes garbo routes for user (admin onl
             count = count + 1
         end
     end
-
     TriggerClientEvent('QBCore:Notify', source, Lang:t("success.clear_routes", {value = count}), "success")
     Routes[CitizenId] = nil
 end, "admin")
+
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel1', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level1Low, Config.Level1High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel2', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level2Low, Config.Level2High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel3', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level3Low, Config.Level3High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel4', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level4Low, Config.Level4High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel5', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level5Low, Config.Level5High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel6', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level6Low, Config.Level6High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel7', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level7Low, Config.Level7High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
+
+RegisterNetEvent('qb-garbagejob:server:NPCBonusLevel8', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    if Player.PlayerData.job.name == "garbage" then
+        local Bonus = math.random(Config.Level8Low, Config.Level8High)
+        Player.Functions.AddMoney('cash', Bonus)
+    end
+end)
